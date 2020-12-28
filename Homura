@@ -183,7 +183,7 @@ mkdir $NDIR/Tinkering
 info "Welcome to the Tinkering section, here you can copy exiting installtions and tinkering with them without touching the original installation. If you want to know more please visit the wiki, happy tinkering!"
 fi
 
-export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Choose an application to tinkering" FALSE "Launcher" FALSE "Winetricks" FALSE "Remove a prefix from tinkering" FALSE "Exit Tinkering")
+export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Choose an application to tinkering" FALSE "Launcher" FALSE "Winetricks" FALSE "Remove an application from tinkering" FALSE "Exit Tinkering")
 
 if [[ $TODO == *"Choose an application to tinkering"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR)" ]; then
@@ -257,10 +257,10 @@ GDIR=$NDIR/Tinkering/Games
 PDIR=$NDIR/Tinkering/Programs
 export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
 export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to remove from tinkering?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
-if [[ -z "$LNCH" ]]; then
-info "Nothing was selected to launch"
+if [[ -z "$UNST" ]]; then
+info "Nothing was selected to uninstall"
 unset LNCH
-exec $NAME Tinerking
+exec $NAME Tinkering
 else
 bash $LDIR/$UNST
 notify "Task completed!"
