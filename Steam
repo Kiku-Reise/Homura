@@ -52,8 +52,8 @@ WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Steam
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
-#rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
+rm -d -f -r "$NDIR/Games/$UNST"
+#rm -d -f -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
 #rm /usr/home/$USER/Desktop/$UNST.desktop
 fi
 
