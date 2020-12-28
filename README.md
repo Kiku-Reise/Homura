@@ -4,7 +4,7 @@
 
 <p align="center">
 	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Status">Status</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/tree/library">Library</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/src/branch/library">Library</a>&nbsp;&nbsp;&nbsp;
 	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Tweaks">Tweaks</a>&nbsp;&nbsp;&nbsp;
 	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Borked">Borked</a>&nbsp;&nbsp;&nbsp;
 	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Working-Games">Working Games</a>&nbsp;&nbsp;&nbsp;
