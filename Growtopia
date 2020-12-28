@@ -9,33 +9,33 @@ download https://growtopiagame.com/Growtopia-Installer.exe
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
-WINEPREFIX=$NDIR/Games/$INST wine $DDIR/Growtopia-Installer.exe
+WINEPREFIX=$GDIR/$INST wine $DDIR/Growtopia-Installer.exe
 rm $DDIR/Growtopia-Installer.exe
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/users/$USER/Local Settings/Application Data/Growtopia/Growtopia.exe"
+WINEPREFIX=$GDIR/$LNCH wine "$GDIR/$LNCH/drive_c/users/$USER/Local Settings/Application Data/Growtopia/Growtopia.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
 rm /usr/home/$USER/Desktop/$UNST.desktop
 fi
 
 if [[ $TODO == *"Update"* ]]; then
-if [ ! -d "$NDIR/Games/$UPDE" ]; then
+if [ ! -d "$GDIR/$UPDE" ]; then
 info "You can not update something what is not installed :)"
 else
 cd $DDIR
 fetch https://growtopiagame.com/Growtopia-Installer.exe
 echo -e "\e[40;38;5;82mStarting installer\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$UPDE wine $DDIR/Growtopia-Installer.exe
+WINEPREFIX=$GDIR/$UPDE wine $DDIR/Growtopia-Installer.exe
 rm $DDIR/Growtopia-Installer.exe
 fi
 fi

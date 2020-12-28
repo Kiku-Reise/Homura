@@ -10,20 +10,20 @@ fi
 # Prefix
 #prefix-message
 #echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-#WINEPREFIX=$NDIR/Games/$INST winetricks win10
+#WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 #installer-message
-#WINEPREFIX=$NDIR/Games/$INST wine $DDIR/live.euw.exe
+#WINEPREFIX=$GDIR/$INST wine $DDIR/live.euw.exe
 #rm $DDIR/live.euw.exe
-#WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+#WINEPREFIX="$GDIR/$INST" winetricks sandbox
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/drive_c/Riot Games/League of Legends/LeagueClient.exe"
+WINEPREFIX="$GDIR/$LNCH" wine "$GDIR/$LNCH/drive_c/Riot Games/League of Legends/LeagueClient.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm "/usr/home/$USER/.local/share/applications/League of Legends.desktop"
 rm $DDIR/icon.png
 rm /usr/home/$USER/.local/share/applications/$CS.desktop

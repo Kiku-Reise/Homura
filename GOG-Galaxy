@@ -10,13 +10,13 @@ download https://content-system.gog.com/open_link/download?path=/open/galaxy/cli
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
 info "The installation will come with an error but you can ignore that."
-WINEPREFIX="$NDIR/Games/$INST" wine $DDIR/setup_galaxy_$GOGVER.exe
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" wine $DDIR/setup_galaxy_$GOGVER.exe
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 if [ -f "/usr/home/$USER/.local/share/applications/wine/Programs/GOG.com/GOG Galaxy/GOG Galaxy.desktop" ]; then
 echo -e "\e[40;38;5;32mReplacing the shortcut with one that contains the required tweaks\e[30;48;5;82m\e[0m"
 rm "/usr/home/$USER/.local/share/applications/wine/Programs/GOG.com/GOG Galaxy/GOG Galaxy.desktop"
@@ -33,11 +33,11 @@ rm $DDIR/setup_galaxy_$GOGVER.exe
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/drive_c/Program Files/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated
+WINEPREFIX="$GDIR/$LNCH" wine "$GDIR/$LNCH/drive_c/Program Files/GOG Galaxy/GalaxyClient.exe" /runWithoutUpdating /deelevated
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/GOG.com
 rm -d -r "/usr/home/$USER/Desktop/GOG Galaxy.desktop"
 fi
