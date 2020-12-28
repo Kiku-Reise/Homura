@@ -71,7 +71,7 @@ fi
 if [ ! -d "$NDIR" ]; then
 TODO="Setting up $NAME"
 mkdir -p $NDIR
-info "Welcome to $NAME. If you have a problem, suggestion, questions or similar, do not hesitate to open an issue on GitLab. Have Fun!"
+info "Welcome to $NAME. If you have a problem, suggestion, questions or similar, do not hesitate to open an issue on Codeberg. Have Fun!"
 if [[ $OSN != "FreeBSD" ]]; then
 info "You are about to use $NAME on an unsupported system ($OSN). Please be aware that unexpected errors may occur and that your bug reports can be marked as invaild."
 fi
@@ -119,13 +119,13 @@ TODO="Library"
 if [ ! -d "$LDIR" ]; then
 mkdir -p $LDIR
 cd $LDIR
-fetch https://gitlab.com/Alexander88207/Homura/-/archive/library/Homura-library.zip
-unzip Homura-library.zip
-mv $LDIR/Homura-library/* $LDIR
+fetch https://codeberg.org/Alexander88207/Homura/archive/library.zip
+unzip library.zip
+mv $LDIR/homura/* $LDIR
 cd $LDIR/
 chmod +x *
-rm -r -d $LDIR/Homura-library
-rm Homura-library.zip
+rm -r -d $LDIR/homura
+rm library.zip
 rm LICENSE
 if [ "$(ls -A $LDIR)" ]; then
 echo -e "\e[3;5;0;32mLibrary successfully loaded.\e[30;48;5;82m\e[0m"
@@ -466,7 +466,7 @@ notify "The logging have been quit."
 fi
 
 if [[ $TODO == *"Other"* ]]; then
-OTR=$(zenity --list --radiolist --window-icon=$ICO --height=250 --width 250 --title="$NAME $VER - $TODO" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Use software rendering" FALSE "Delete & reset everything" FALSE "Create a shortcut" FALSE "GitLab page" FALSE "Update library")
+OTR=$(zenity --list --radiolist --window-icon=$ICO --height=250 --width 250 --title="$NAME $VER - $TODO" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Use software rendering" FALSE "Delete & reset everything" FALSE "Create a shortcut" FALSE "Codeberg page" FALSE "Update library")
 
 if [[ $OTR == *"Use software rendering"* ]]; then
 LIBGL_ALWAYS_SOFTWARE=1 $NAME
@@ -502,8 +502,8 @@ fi
 bash $LDIR/$CS
 fi
 
-if [[ $OTR == *"GitLab page"* ]]; then
-xdg-open https://gitlab.com/Alexander88207/Homura
+if [[ $OTR == *"Codeberg page"* ]]; then
+xdg-open https://codeberg.org/Alexander88207/Homura
 fi
 
 if [[ $OTR == *"Update library"* ]]; then
