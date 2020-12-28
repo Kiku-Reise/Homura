@@ -1,0 +1,43 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10 and prevent that the wm decorates the window\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10 windowmanagerdecorated=n
+
+# Installer
+installer-message
+info "You may need to disable the browser acceleration in the options of the loginscreen"
+WINEPREFIX=$NDIR/Games/$INST wine $DDIR/Battle.net-Setup-enUS.exe
+rm $DDIR/Battle.net-Setup-enUS.exe
+WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Battle.net/Battle.net.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/Battle.net
+rm -d -r /usr/home/$USER/Desktop/Battle.net.desktop
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+mkdir -p /usr/home/$USER/.local/share/applications/wine/Programs/Battle.net
+if [ -f "/usr/home/$USER/.local/share/applications/wine/Programs/Battle.net/Battle.net.desktop" ]; then
+rm /usr/home/$USER/.local/share/applications/wine/Programs/Battle.net/Battle.net.desktop
+fi
+echo "[Desktop Entry]
+Name=$CS
+Exec=$NAME Launch $CS
+Type=Application
+StartupNotify=true
+Icon=65EF_Battle.net Launcher.0" >> /usr/home/$USER/.local/share/applications/wine/Programs/Battle.net/Battle.net.desktop
+fi
