@@ -396,7 +396,7 @@ info "Nothing was selected for uninstallation :/"
 unset UNST
 exec $NAME
 else
-QT=$(Do you really want to uninstall $UNST?")
+QT=$(question "Do you really want to uninstall $UNST?")
 if [[ $QT == *"0"* ]]; then
 notify "Starting Uninstallation"
 fi
@@ -458,7 +458,7 @@ bash $LDIR/fixes
 fi
 
 if [[ $TODO == *"Tinkering"* ]]; then
-$NAME Tinkering
+exec $NAME Tinkering
 fi
 
 if [[ $TODO == *"Open Homura folder"* ]]; then
