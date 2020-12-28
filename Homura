@@ -367,6 +367,14 @@ notify "Installation have been canceled"
 exec $NAME
 fi
 fi
+QT=$(question "Do you really want to install $INST?")
+if [[ $QT == *"0"* ]]; then
+notify "Starting Installation"
+fi
+if [[ $QT == *"1"* ]]; then 
+notify "Installation have been canceled"
+exec $NAME
+fi
 bash $LDIR/$INST
 notify "Task completed!"
 unset INST
