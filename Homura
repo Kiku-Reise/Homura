@@ -187,7 +187,7 @@ export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width
 
 if [[ $TODO == *"Choose an application to tinkering"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR)" ]; then
-info "Nothing is to tinker :/"
+notify "Nothing is to tinker"
 exec $NAME Tinkering
 fi
 export TCPY=$(zenity --file-selection --directory --title="Choose your prefix" --filename="$NDIR/")
@@ -213,7 +213,7 @@ fi
 
 if [[ $TODO == *"Launcher"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
-info "Nothing is installed :/"
+notify "Nothing is installed"
 exec $NAME
 fi
 GDIR=$NDIR/Tinkering/Games
@@ -222,7 +222,7 @@ TODO=Launcher
 export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
 export LNCH=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to launch?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
 if [[ -z "$LNCH" ]]; then
-info "Nothing was selected to launch :/"
+notify "Nothing was selected to launch"
 unset LNCH
 exec $NAME Tinkering
 else
@@ -256,7 +256,7 @@ PDIR=$NDIR/Tinkering/Programs
 export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
 export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to remove from tinkering?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
 if [[ -z "$LNCH" ]]; then
-info "Nothing was selected to launch :/"
+info "Nothing was selected to launch"
 unset LNCH
 exec $NAME Tinerking
 else
@@ -323,7 +323,7 @@ echo -e "\e[3;5;0;32mConnection to the internet exists.\e[30;48;5;82m\e[0m"
 else
 IQ=$(question "Hm.. it looks like you have no internet connection, do you want to continue?")
 if [[ $IQ == *"0"* ]]; then
-echo -e "\e[3;5;0;31mUser is going to the applist even $NAME have no internet connection apparently?\e[30;48;5;82m\e[0m"
+echo -e "\e[3;5;0;31m$USER is going to the applist even $NAME have no internet connection apparently?\e[30;48;5;82m\e[0m"
 fi
 if [[ $IQ == *"1"* ]]; then 
 notify "Action was canceled."
@@ -333,7 +333,7 @@ fi
 export INST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to install?" --height=$ALH --width=$WTH --column="Application" $APPLIST)
 # Check if an application was selected.
 if [[ -z "$INST" ]]; then
-info "Nothing was selected for installation :/"
+notify "Nothing was selected for installation"
 unset INST
 exec $NAME
 else
@@ -383,12 +383,12 @@ fi
 
 if [[ $TODO == *"Launcher"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
-info "Nothing is installed :/"
+notify "Nothing is installed"
 exec $NAME
 fi
 export LNCH=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to launch?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
 if [[ -z "$LNCH" ]]; then
-info "Nothing was selected to launch :/"
+notify "Nothing was selected to launch"
 unset LNCH
 exec $NAME
 else
@@ -400,12 +400,12 @@ fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
-info "Nothing is installed :/"
+notify "Nothing is installed"
 exec $NAME
 fi
 export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to uninstall?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
 if [[ -z "$UNST" ]]; then
-info "Nothing was selected for uninstallation :/"
+notify "Nothing was selected for uninstallation"
 unset UNST
 exec $NAME
 else
@@ -459,7 +459,7 @@ fi
 
 if [[ $TODO == *"Update"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
-info "Nothing is installed :/"
+notify "Nothing is installed"
 exec $NAME
 fi
 export UPDE=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to update?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
