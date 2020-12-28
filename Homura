@@ -180,7 +180,7 @@ bash $LDIR/$1
 Tinkering() {
 if [ ! -d "$NDIR/Tinkering" ]; then
 mkdir $NDIR/Tinkering
-info "Welcome to the Tinkering section, here you can copy exiting installtions and tinkering with them without touching the original installation. If you want to know more please visit the wiki, happy tinkering! 
+info "Welcome to the Tinkering section, here you can copy exiting installtions and tinkering with them without touching the original installation. If you want to know more please visit the wiki, happy tinkering!"
 fi
 
 export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Choose an application to tinkering" FALSE "Launcher" FALSE "Winetricks" FALSE "Remove a prefix from tinkering" FALSE "Exit Tinkering")
@@ -188,6 +188,7 @@ export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width
 if [[ $TODO == *"Choose an application to tinkering"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR)" ]; then
 info "Nothing is to tinker :/"
+exec $NAME Tinkering
 fi
 export TCPY=$(zenity --file-selection --directory --title="Choose your prefix" --filename="$NDIR/")
 DIRCHECK=$(echo $TCPY | grep -o Games)
@@ -493,11 +494,6 @@ if [ -f "/usr/home/$USER/.local/share/applications/$NAME.desktop" ]; then
 rm "/usr/home/$USER/.local/share/applications/$NAME.desktop"
 else 
 echo -e "\e[40;38;5;32mNo shortcut was created\e[30;48;5;82m\e[0m"
-fi
-if [ -d "/usr/home/$USER/.local/share/applications/$NAME" ]; then
-rm -r -d "/usr/home/$USER/.local/share/applications/$NAME"
-else 
-echo -e "\e[40;38;5;32mNo shortcut from $NAME was created\e[30;48;5;82m\e[0m"
 fi
 zenity --info --window-icon=$ICO --width=200 --title="$NAME $VER - $OTR" --text="All files of $NAME have been deleted, we hope you had a good time."
 exit
