@@ -201,6 +201,7 @@ $NAME Tinkering
 fi
 GDIR=$NDIR/Tinkering/Games
 PDIR=$NDIR/Tinkering/Programs
+info "The whole selected prefix will now be copied, this may take a moment depending on your setup."
 if [ -d "$TCPY/dosdevices/z:" ]; then
 WINEPREFIX=$TCPY winetricks sandbox
 fi
@@ -209,6 +210,7 @@ cp -ifprv "$TCPY" "$PDIR"
 else
 cp -ifprv "$TCPY" "$GDIR"
 fi
+info "The whole selected prefix have been copied, time to for tinkering! :)"
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
@@ -270,7 +272,7 @@ if [[ $TODO == *"Exit Tinkering"* ]]; then
 exec $NAME
 fi
 
-$NAME Tinkering
+exec $NAME Tinkering
 }
 
 "$@"
