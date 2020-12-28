@@ -1,0 +1,44 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/Origin winetricks win10
+
+# Installer
+installer-message
+warn "Dont forget to disable the Origin in-game overlay or you are unable to start a game."
+WINEPREFIX=$NDIR/Games/$INST wine $DDIR/OriginThinSetup.exe
+rm $DDIR/OriginThinSetup.exe
+chmod -R 777 $NDIR/Games/Origin
+WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Origin/Origin.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
+rm /usr/home/$USER/Desktop/$UNST.desktop
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+mkdir -p /usr/home/$USER/.local/share/applications/wine/Programs/$CS
+if [ -f "/usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop" ]; then
+rm /usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop
+fi
+echo "[Desktop Entry]
+Name=$CS
+Exec=$NAME Launch $CS
+Type=Application
+StartupNotify=true
+Icon=9AD6_Origin.0" >> /usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop
+fi

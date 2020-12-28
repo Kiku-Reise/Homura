@@ -1,0 +1,36 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download https://homura.magzu.net/games/TLauncher-MCL.exe
+download https://homura.magzu.net/games/jre-windows.exe
+download https://homura.magzu.net/games/Java.7z
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+info "The following java installation will not complete but thats OK! :)"
+WINEPREFIX=$NDIR/Games/$INST wine $DDIR/jre-windows.exe
+mv $DDIR/TLauncher-MCL.exe $NDIR/Games/$INST
+rm -r -d $NDIR/Games/$INST/drive_c/Program Files/Java
+cd $NDIR/Games/$INST/drive_c/Program Files
+7z x $DDIR/Java.7z
+mv $NDIR/Games/$INST/drive_c/Program Files/Java/jre1.8.0_271 $NDIR/Games/$INST/drive_c/Program Files/Java/jre1.8.0_51
+info "Please know this client freezes fast and is unstable, you maybe need to run it more than one times to get a stable state."
+rm $DDIR/jre-windows.exe
+rm $DDIR/Java.7z
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine $NDIR/Games/$LNCH/TLauncher-MCL.exe
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+fi

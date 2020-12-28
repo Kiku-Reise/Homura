@@ -1,0 +1,30 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download https://dl.pokemmo.eu/download/pokemmo-installer-windows-x32.exe
+
+# Prefix
+prefix-message
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/pokemmo-installer-windows-x32.exe"
+info "PokeMMO needs at least a black/white rom to run, you must have the legal right to use that rom. We will not supply you with the roms, or help you find them as they are copyrighted."
+rm $DDIR/pokemmo-installer-windows-x32.exe
+WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/PokeMMO/PokeMMO.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "/usr/home/$USER/.local/share/applications/wine/Programs/$UNST"
+rm /usr/home/$USER/Desktop/$UNST.desktop
+rm /usr/home/$USER/Desktop/$UNST.lnk
+fi
