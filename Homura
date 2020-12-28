@@ -160,6 +160,7 @@ Install() {
 CLI=1
 export INST=$1
 export TODO=Installation
+cd $DDIR
 bash $LDIR/$1
 }
 
