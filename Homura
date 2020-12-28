@@ -178,7 +178,11 @@ bash $LDIR/$1
 }
 
 Tinkering() {
-mkdir -p $NDIR/Tinkering
+if [ ! -d "$NDIR/Tinkering" ]; then
+mkdir $NDIR/Tinkering
+info "Welcome to the Tinkering section, here you can copy exiting installtions and tinkering with them without touching the original installation. If you want to know more please visit the wiki, happy tinkering! 
+fi
+
 export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Choose an application to tinkering" FALSE "Launcher" FALSE "Winetricks" FALSE "Remove a prefix from tinkering" FALSE "Exit Tinkering")
 
 if [[ $TODO == *"Choose an application to tinkering"* ]]; then
