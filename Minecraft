@@ -22,7 +22,7 @@ rm -r -d -f "$GDIR/$INST/drive_c/Program Files/Java"
 cd "$GDIR/$INST/drive_c/Program Files"
 7z x $DDIR/Java.7z
 mv "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_271" "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_51"
-info "Please know this client freezes fast and is unstable, you maybe need to run it more than one times to get a stable state."
+info "Please know this client freezes fast and is unstable, you maybe need to run it more than one times to get a stable state. Also please set the ram allocation to 1000MB"
 rm $DDIR/jre-windows.exe
 rm $DDIR/Java.7z
 fi
