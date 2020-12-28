@@ -10,31 +10,31 @@ download https://files.teamspeak-services.com/releases/client/$TSVER/TeamSpeak3-
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Programs/$INST winetricks vcrun2015 win10
+WINEPREFIX=$PDIR/$INST winetricks vcrun2015 win10
 
 # Installer
 installer-message
 info "To get Playback and Capture working set both mods to Direct Sound."
 info "If the $INST setup crashes, please make sure that the package x11-fonts/noto-extra is installed. After installation of $INST you can remove it again."
-WINEPREFIX=$NDIR/Programs/$INST wine $DDIR/TeamSpeak3-Client-win32-$TSVER.exe
+WINEPREFIX=$PDIR/$INST wine $DDIR/TeamSpeak3-Client-win32-$TSVER.exe
 rm $DDIR/TeamSpeak3-Client-win32-$TSVER.exe
-WINEPREFIX=$NDIR/Programs/$INST winetricks sandbox
+WINEPREFIX=$PDIR/$INST winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Programs/$LNCH wine "$NDIR/Programs/$LNCH/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win32.exe"
+WINEPREFIX=$PDIR/$LNCH wine "$PDIR/$LNCH/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win32.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r $NDIR/Programs/$UNST
+rm -d -r $PDIR/$UNST
 rm "/usr/home/$USER/.local/share/applications/wine/Programs/TeamSpeak 3 Client.desktop"
 fi
 
 if [[ $TODO == *"Update"* ]]; then
-if [ ! -d "$NDIR/Programs/Teamspeak" ]; then
+if [ ! -d "$PDIR/Teamspeak" ]; then
 info "You can not update something what is not installed :)"
 else
-WINEPREFIX=$NDIR/Programs/$UPDE wine "$NDIR/Programs/$UPDE/drive_c/Program Files/TeamSpeak 3 Client/update.exe"
+WINEPREFIX=$PDIR/$UPDE wine "$PDIR/$UPDE/drive_c/Program Files/TeamSpeak 3 Client/update.exe"
 kill ts3client_win32.exe
 fi
 fi

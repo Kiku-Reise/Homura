@@ -4,27 +4,27 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 # Download
-mkdir -p $NDIR/Programs/$INST
-mkdir -p $NDIR/Programs/$INST/SteamCMD
-cd $NDIR/Programs/$INST/SteamCMD
+mkdir -p $PDIR/$INST
+mkdir -p $PDIR/$INST/SteamCMD
+cd $PDIR/$INST/SteamCMD
 download https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip
 
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Programs/$INST winetricks win10
+WINEPREFIX=$PDIR/$INST winetricks win10
 
 # Installer
 installer-message
 tar -xf steamcmd.zip
 rm steamcmd.zip
-WINEPREFIX="$NDIR/Programs/$INST" winetricks sandbox
+WINEPREFIX="$PDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Programs/$LNCH WINEDEBUG=-all wineconsole $NDIR/Programs/$LNCH/SteamCMD/steamcmd.exe
+WINEPREFIX=$PDIR/$LNCH WINEDEBUG=-all wineconsole $PDIR/$LNCH/SteamCMD/steamcmd.exe
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r $NDIR/Programs/$UNST
+rm -d -r $PDIR/$UNST
 fi
