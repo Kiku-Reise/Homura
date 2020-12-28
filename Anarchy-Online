@@ -8,21 +8,21 @@ download http://update.anarchy-online.com/download/AO/AnarchyOnline_EP1.exe
 
 # Prefix
 prefix-message
-WINEPREFIX="$NDIR/Games/$INST" winetricks winxp
+WINEPREFIX="$GDIR/$INST" winetricks winxp
 
 # Installer
 warn "Please let the installer create an shortcut or you will unable to start the launcher later."
-WINEPREFIX="$NDIR/Games/$INST" wine $DDIR/AnarchyOnline_EP1.exe
+WINEPREFIX="$GDIR/$INST" wine $DDIR/AnarchyOnline_EP1.exe
 rm $DDIR/AnarchyOnline_EP1.exe
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-env WINEPREFIX="$NDIR/Games/$LNCH" wine C:\\windows\\command\\start.exe /Unix $NDIR/Games/Anarchy\ Online/dosdevices/c:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Anarchy\ Online/Anarchy\ Online.lnk
+env WINEPREFIX="$GDIR/$LNCH" wine C:\\windows\\command\\start.exe /Unix $GDIR/Anarchy\ Online/dosdevices/c:/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Anarchy\ Online/Anarchy\ Online.lnk
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r "/usr/home/$USER/.local/share/applications/wine/Programs/Anarchy Online"
 rm "/usr/home/$USER/Desktop/Anarchy Online.desktop"
 fi

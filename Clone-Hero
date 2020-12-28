@@ -4,16 +4,16 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 # Download
-mkdir "$NDIR/Games/$INST"
-cd "$NDIR/Games/$INST"
+mkdir "$GDIR/$INST"
+cd "$GDIR/$INST"
 download http://dl.clonehero.net/clonehero-v.23.2.2/clonehero-win32.7z
 
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mInstalling arial fonts to fix missing fonts in the controls menu and ingame\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks arial
+WINEPREFIX=$GDIR/$INST winetricks arial
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
@@ -21,16 +21,16 @@ installer-message
 rm clonehero-win32.7z
 echo -e "\e[40;38;5;32mApplying a fix to prevent game from crashing at start\e[30;48;5;82m\e[0m"
 cd clonehero-win32
-fetch https://gitlab.com/Alexander88207/Homura/-/raw/master/Gameconfigs/Clone%20Hero/settings.ini
+fetch https://codeberg.org/Alexander88207/Homura/raw/branch/main/Gameconfigs/Clone%20Hero/settings.ini
 info "If you own a guitar hero controller, you may want to check out the tutorial how to get this controller working: https://forums.freebsd.org/threads/setting-up-guitar-hero-guitars-for-clone-hero-etc-on-freebsd.72953/"
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/clonehero-win32/Clone Hero.exe"
+WINEPREFIX="$GDIR/$LNCH" wine "$GDIR/$LNCH/clonehero-win32/Clone Hero.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm "/usr/home/$USER/.local/share/applications/$UNST.desktop"
 rm $DDIR/favicon.ico
 rm "/usr/home/$USER/.local/share/applications/$CS.desktop"

@@ -9,22 +9,22 @@ download http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cd
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10 and prevent that the wm decorates the window\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10 windowmanagerdecorated=n
+WINEPREFIX=$GDIR/$INST winetricks win10 windowmanagerdecorated=n
 
 # Installer
 installer-message
 info "You may need to disable the browser acceleration in the options of the loginscreen"
-WINEPREFIX=$NDIR/Games/$INST wine $DDIR/Battle.net-Setup-enUS.exe
+WINEPREFIX=$GDIR/$INST wine $DDIR/Battle.net-Setup-enUS.exe
 rm $DDIR/Battle.net-Setup-enUS.exe
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Battle.net/Battle.net.exe"
+WINEPREFIX=$GDIR/$LNCH wine "$GDIR/$LNCH/drive_c/Program Files/Battle.net/Battle.net.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/Battle.net
 rm -d -r /usr/home/$USER/Desktop/Battle.net.desktop
 fi
