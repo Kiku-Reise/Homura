@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Banner.jpeg">
+  <img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/Media/Banner.jpeg">
 </p>
 
 <p align="center">
@@ -128,13 +128,13 @@ You need fast help, want to help or just want to talk?  ／人◕ ‿‿ ◕人�
 
 # Screenshots
 
-![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot.png "Screenshot")
+![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/Media/Screenshot.png "Screenshot")
 
-![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot4.png "Screenshot")
+![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/Media/Screenshot4.png "Screenshot")
 
-<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot2.png" alt="Monitor" height="500" width="700"> 
+<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/Media/Screenshot2.png" alt="Monitor" height="500" width="700"> 
 
-<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot3.png" alt="Monitor" height="500" width="700"> 
+<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/Media/Screenshot3.png" alt="Monitor" height="500" width="700"> 
 
 # Videos
 
