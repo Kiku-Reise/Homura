@@ -396,6 +396,14 @@ info "Nothing was selected for uninstallation :/"
 unset UNST
 exec $NAME
 else
+QT=$(Do you really want to uninstall $UNST?")
+if [[ $QT == *"0"* ]]; then
+notify "Starting Uninstallation"
+fi
+if [[ $QT == *"1"* ]]; then 
+notify "Uninstall have been canceled"
+exec $NAME
+fi
 bash $LDIR/$UNST
 notify "Task completed!"
 unset UNST
