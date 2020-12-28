@@ -9,21 +9,21 @@ download "https://pdds-cdn.ucweb.com/8-0/UCBrowser/1801/41f04143113a759524bd1399
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Programs/$INST winetricks win10
+WINEPREFIX=$PDIR/$INST winetricks win10
 
 # Installer
 installer-message
-WINEPREFIX=$NDIR/Programs/$INST wine "$DDIR/UCBrowser_V7.0.185.1002_windows_pf101_(Build18010215).exe"
+WINEPREFIX=$PDIR/$INST wine "$DDIR/UCBrowser_V7.0.185.1002_windows_pf101_(Build18010215).exe"
 rm "$DDIR/UCBrowser_V7.0.185.1002_windows_pf101_(Build18010215).exe"
 WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Programs/$LNCH wine "$NDIR/Programs/$LNCH/drive_c/Program Files/UCBrowser/Application/UCBrowser.exe"
+WINEPREFIX=$PDIR/$LNCH wine "$PDIR/$LNCH/drive_c/Program Files/UCBrowser/Application/UCBrowser.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
 rm -d -r "/usr/home/$USER/.local/share/applications/wine/Programs/UC Browser"
 rm "/usr/home/$USER/.local/share/applications/wine/Programs/UC Browser.desktop"
-rm -d -r $NDIR/Programs/$UNST
+rm -d -r $PDIR/$UNST
 fi

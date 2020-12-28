@@ -8,22 +8,22 @@ download http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_EU.exe
 
 # Prefix
 prefix-message
-WINEPREFIX="$NDIR/Games/$INST" winetricks vcrun2015
-WINEPREFIX="$NDIR/Games/$INST" winetricks win7
+WINEPREFIX="$GDIR/$INST" winetricks vcrun2015
+WINEPREFIX="$GDIR/$INST" winetricks win7
 
 # Installer
 installer-message
-WINEPREFIX="$NDIR/Games/$INST" wine $DDIR/Wargaming_Game_Center_Install_EU.exe
+WINEPREFIX="$GDIR/$INST" wine $DDIR/Wargaming_Game_Center_Install_EU.exe
 rm $DDIR/Wargaming_Game_Center_Install_EU.exe
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/drive_c/Program Files/Wargaming.net/GameCenter/wgc.exe"
+WINEPREFIX="$GDIR/$LNCH" wine "$GDIR/$LNCH/drive_c/Program Files/Wargaming.net/GameCenter/wgc.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/Wargaming.net
 rm "/usr/home/$USER/Desktop/Game Center.desktop"
 fi

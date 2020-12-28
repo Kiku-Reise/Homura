@@ -4,14 +4,14 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 # Download
-mkdir "$NDIR/Games/$INST"
-cd "$NDIR/Games/$INST"
+mkdir "$GDIR/$INST"
+cd "$GDIR/$INST"
 download https://homura.magzu.net/games/VC-German.7z
 
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
@@ -21,10 +21,10 @@ info "This game was developed by G5 Entertainment for the PC and later removed f
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-cd "$NDIR/Games/$LNCH/Virtual City"
-WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/Virtual City/VirtualCity.exe"
+cd "$GDIR/$LNCH/Virtual City"
+WINEPREFIX="$GDIR/$LNCH" wine "$GDIR/$LNCH/Virtual City/VirtualCity.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 fi
