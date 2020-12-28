@@ -1,0 +1,533 @@
+#!/usr/local/bin/bash
+export NAME=Homura
+export VER=5.3-devel
+export ALH=500
+export WTH=500
+GPU=$(glxinfo | grep "OpenGL vendor string")
+OSN=$(uname)
+export NDIR=/usr/home/$USER/.local/share/$NAME
+export DDIR=$NDIR/Data
+export LDIR=$NDIR/Library
+export GDIR=$NDIR/Games
+export PDIR=$NDIR/Programs
+export CPDIR=$NDIR/Custom-Prefixes
+export ICO=$DDIR/$NAME.png
+DATE=$(date)
+DATEY=$(date +%Y)
+DATEDM=$(date +%d-%m)
+WINEVER=$(wine --version)
+COPYRIGHT=$(echo 2019-$DATEY, Alexander Vereeken)
+
+# Functions :)
+function download {
+               zenity --notification --window-icon=$ICO --text "Downloading $INST $UPDE"
+               fetch --retry $1
+           }
+
+function prefix-message {
+               zenity --notification --window-icon=$ICO --text "Setup prefix"
+           }
+
+function installer-message {
+               zenity --notification --window-icon=$ICO --text "Starting installation"
+           }
+
+function warn {
+               zenity --warning --width=400 --window-icon=$ICO --title "$NAME $VER - $TODO" --text "$1"
+           }
+           
+function info {
+               zenity --info --width=400 --window-icon=$ICO --title "$NAME $VER - $TODO" --text "$1"
+           }
+
+function question {
+               zenity --question --width=400 --window-icon=$ICO --title "$NAME $VER" --text "$1"; echo $?
+           }
+
+function notify {
+               zenity --notification --window-icon=$ICO --text "$1"
+           }
+
+function remove {
+               rm -d -r -f "$1"
+           }
+
+export -f download
+export -f prefix-message
+export -f installer-message
+export -f warn
+export -f info
+export -f question
+export -f notify
+
+
+# Running Homura as root is not recommended. If you still want to run Homura as root, remove these 4 lines and also ensure that NDIR is proper then.
+if [[ $USER == *"root"* ]]; then
+info "$NAME can not be executed as root."
+exit
+fi
+
+# When Homura is first started.
+if [ ! -d "$NDIR" ]; then
+TODO="Setting up $NAME"
+mkdir -p $NDIR
+info "Welcome to $NAME. If you have a problem, suggestion, questions or similar, do not hesitate to open an issue on GitLab. Have Fun!"
+if [[ $OSN != "FreeBSD" ]]; then
+info "You are about to use $NAME on an unsupported system ($OSN). Please be aware that unexpected errors may occur and that your bug reports can be marked as invaild."
+fi
+SC=$(question "Do you want a shortcut of $NAME in your application menu?")
+if [[ $SC == *"0"* ]]; then
+if [ ! -d "/usr/home/$USER/.local/share/applications" ]; then
+mkdir /usr/home/$USER/.local/share/applications
+fi
+echo "[Desktop Entry]
+Comment=Windows Games Launcher for FreeBSD
+Exec=bash /usr/local/bin/$NAME
+Icon=$DDIR/$NAME.png
+Categories=Game;
+Name=$NAME
+StartupNotify=false
+Terminal=false
+TerminalOptions=
+Type=Application
+" >> /usr/home/$USER/.local/share/applications/$NAME.desktop 
+if [[ $SC == *"1"* ]]; then 
+echo "Shortcut will be not created"
+fi
+fi
+fi
+
+# Creating the subfolders
+if [ ! -d "$GDIR" ]; then
+mkdir $GDIR
+fi
+
+if [ ! -d "$PDIR" ]; then
+mkdir $PDIR
+fi
+
+if [ ! -d "$DDIR" ]; then
+mkdir $DDIR
+fi
+
+if [ ! -f "$ICO" ]; then
+cd $DDIR
+fetch http://alt.magzu.net/damn/dl/Homura.png
+fi
+
+TODO="Library"
+if [ ! -d "$LDIR" ]; then
+mkdir -p $LDIR
+cd $LDIR
+fetch https://gitlab.com/Alexander88207/Homura/-/archive/library/Homura-library.zip
+unzip Homura-library.zip
+mv $LDIR/Homura-library/* $LDIR
+cd $LDIR/
+chmod +x *
+rm -r -d $LDIR/Homura-library
+rm Homura-library.zip
+rm LICENSE
+if [ "$(ls -A $LDIR)" ]; then
+echo -e "\e[3;5;0;32mLibrary successfully loaded.\e[30;48;5;82m\e[0m"
+else
+warn "The library could not be loaded successfully, maybe no internet connection? Use update library under other to try a reload."
+exec $NAME
+fi
+ln -s $LDIR/Custom-Prefix $LDIR/Custom-Prefixes
+fi
+
+if [ "$(ls -A $LDIR)" ]; then
+echo -e "\e[3;5;0;32mHomura library is not empty, nice!.\e[30;48;5;82m\e[0m"
+else
+warn "The Homura library is empty. Please use update library under other to try a reload."
+fi
+
+# The Applists
+export APPLIST=$(cd $LDIR && ls | grep -v fixes)
+export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls && cd "$NDIR" && ls | grep "Custom-Prefixes" )
+
+# Small checks to ensure that the user knows that no correct drivers are running.
+if [[ $GPU == *"VMware, Inc."* ]]; then
+info "$NAME have detected that you are using the fallback drivers, please check your gpu driver installation. If you should run $NAME in a virtual machine or you have enabled software rendering then you can ignore this message."
+fi
+
+if [[ $GPU == *"Mesa Project"* ]]; then
+info "$NAME have detected that you are using the fallback drivers, please check your gpu driver installation. If you should run $NAME in a virtual machine or you have enabled software rendering then you can ignore this message."
+fi
+
+# CLI
+Install() {
+CLI=1
+export INST=$1
+export TODO=Installation
+bash $LDIR/$1
+}
+
+Launch() {
+CLI=1
+export LNCH=$1
+export TODO=Launcher
+bash $LDIR/$1
+}
+
+Uninstall() {
+CLI=1
+export UNST=$1
+export TODO=Uninstallation
+bash $LDIR/$1
+}
+
+Tinkering() {
+mkdir -p $NDIR/Tinkering
+export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Choose an application to tinkering" FALSE "Launcher" FALSE "Winetricks" FALSE "Remove a prefix from tinkering" FALSE "Exit Tinkering")
+
+if [[ $TODO == *"Choose an application to tinkering"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR)" ]; then
+info "Nothing is to tinker :/"
+fi
+export TCPY=$(zenity --file-selection --directory --title="Choose your prefix" --filename="$NDIR/")
+DIRCHECK=$(echo $TCPY | grep -o Games)
+CSPCHECK=$(echo $TCPY | grep -o Custom-Prefixs)
+if [ -z "$CSPCHECK" ]; then
+echo 
+else
+info "Sorry but custom prefixes are not supported :C"
+$NAME Tinkering
+fi
+GDIR=$NDIR/Tinkering/Games
+PDIR=$NDIR/Tinkering/Programs
+if [ -d "$TCPY/dosdevices/z:" ]; then
+WINEPREFIX=$TCPY winetricks sandbox
+fi
+if [ -z "$DIRCHECK" ]; then
+cp -ifprv "$TCPY" "$PDIR"
+else
+cp -ifprv "$TCPY" "$GDIR"
+fi
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
+info "Nothing is installed :/"
+exec $NAME
+fi
+GDIR=$NDIR/Tinkering/Games
+PDIR=$NDIR/Tinkering/Programs
+TODO=Launcher
+export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
+export LNCH=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to launch?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+if [[ -z "$LNCH" ]]; then
+info "Nothing was selected to launch :/"
+unset LNCH
+exec $NAME Tinkering
+else
+bash $LDIR/$LNCH
+notify "Task completed!"
+unset LNCH
+fi
+fi
+
+if [[ $TODO == *"Winetricks"* ]]; then
+cd $NDIR
+PREFIX=$(zenity --file-selection --directory --title="Choose your prefix" --filename="$NDIR/Tinkering")
+if [ -z "$PREFIX" ]
+then
+info "No prefix was selected, action was aborted."
+exec $NAME Tinkering
+else
+echo -e "\e[3;5;0;32m$PREFIX have been selected.\e[30;48;5;82m\e[0m"
+fi
+WINEPREFIX=$PREFIX winetricks
+fi
+
+if [[ $TODO == *"Remove an application from tinkering"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
+info "Nothing is installed :/"
+exec $NAME
+fi
+TODO=Uninstallation
+GDIR=$NDIR/Tinkering/Games
+PDIR=$NDIR/Tinkering/Programs
+export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
+export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to remove from tinkering?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+if [[ -z "$LNCH" ]]; then
+info "Nothing was selected to launch :/"
+unset LNCH
+exec $NAME Tinerking
+else
+bash $LDIR/$UNST
+notify "Task completed!"
+unset LNCH
+fi
+fi
+
+if [[ $TODO == *"Exit Tinkering"* ]]; then
+exec $NAME
+fi
+
+Homura Tinkering
+}
+
+"$@"
+
+# Small informations in the terminal
+echo -e "\e[0;33mCopyright (c) $COPYRIGHT All rights reserved."
+echo -e "\e[0;35mWelcome to $NAME $VER Have Fun!"
+echo -e "\e[3;5;0;92mRunning on $OSN $(uname -r)"
+echo -e "\e[3;5;0;36mWine Version: $WINEVER\e[30;48;5;82m\e[0m"
+echo -e "\e[3;5;0;31mGPU Info OpenGL:\e[30;48;5;82m\e[0m" && glxinfo | grep OpenGL
+echo -e "\e[3;5;0;31mGPU Info Vulkan:\e[30;48;5;82m\e[0m" && vulkaninfo | grep -m 1 "GPU id"
+
+
+# Greetings on certain holidays
+if [[ $DATEDM == *"01-01"* ]]; then
+notify "Happy new year :)"
+fi
+
+if [[ $DATEDM == *"14-02"* ]]; then
+notify "Happy Valentine's Day <3"
+fi
+
+if [[ $DATEDM == *"17-03"* ]]; then
+notify "Happy St. Patrick's Day :)"
+fi
+
+if [[ $DATEDM == *"12-04"* ]] || [[ $DATEDM == *"13-04"* ]]; then
+notify "Happy Easter :)"
+fi
+
+if [[ $DATEDM == *"31-10"* ]]; then
+notify "Happy Halloween ;)"
+fi
+
+if [[ $DATEDM == *"25-12"* ]] || [[ $DATEDM == *"26-12"* ]]; then
+notify "We wish you merry christmas to you, your family and friends :)"
+fi
+
+# Initial menu
+if [ -z "$CLI" ]
+then
+export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Installation" FALSE "Launcher" FALSE "Uninstallation" FALSE "Winetricks" FALSE "Run a executable in prefix" FALSE "Update" FALSE "Applying a fix" FALSE "Open Homura folder" FALSE "Enable logging" FALSE "Other" FALSE "About" FALSE "Exit")
+
+if [[ $TODO == *"Installation"* ]]; then
+# Checking the internet connection.
+nc -z 1.1.1.1 80  >/dev/null 2>&1
+online=$?
+if [ $online -eq 0 ]; then
+echo -e "\e[3;5;0;32mConnection to the internet exists.\e[30;48;5;82m\e[0m"
+else
+IQ=$(question "Hm.. it looks like you have no internet connection, do you want to continue?")
+if [[ $IQ == *"0"* ]]; then
+echo -e "\e[3;5;0;31mUser is going to the applist even $NAME have no internet connection apparently?\e[30;48;5;82m\e[0m"
+fi
+if [[ $IQ == *"1"* ]]; then 
+notify "Action was canceled."
+exec $NAME
+fi
+fi
+export INST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to install?" --height=$ALH --width=$WTH --column="Application" $APPLIST)
+# Check if an application was selected.
+if [[ -z "$INST" ]]; then
+info "Nothing was selected for installation :/"
+unset INST
+exec $NAME
+else
+cd $DDIR
+# Checks if $INST was already installed, needs to be improved.
+CIAI1=$(cd "$GDIR" && ls | grep "$INST")
+if [ -z "$CIAI1" ]
+then
+echo -e "\e[3;5;0;32mApplication was not installed as a Game before.\e[30;48;5;82m\e[0m"
+else
+QT=$(question "Hm.. it looks like $INST is already installed, do you want to continue?")
+if [[ $QT == *"0"* ]]; then
+notify "Installation continues"
+fi
+if [[ $QT == *"1"* ]]; then 
+notify "Installation have been canceled"
+exec $NAME
+fi
+fi
+CIAI2=$(cd "$PDIR" && ls | grep "$INST")
+if [ -z "$CIAI2" ]
+then
+echo -e "\e[3;5;0;32mApplication was not installed as a Program before.\e[30;48;5;82m\e[0m"
+else
+QT=$(question "Hm.. it looks like $INST is already installed, do you want to continue?")
+if [[ $QT == *"0"* ]]; then
+notify "Installation continues"
+fi
+if [[ $QT == *"1"* ]]; then 
+notify "Installation have been canceled"
+exec $NAME
+fi
+fi
+bash $LDIR/$INST
+notify "Task completed!"
+unset INST
+fi
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
+info "Nothing is installed :/"
+exec $NAME
+fi
+export LNCH=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to launch?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+if [[ -z "$LNCH" ]]; then
+info "Nothing was selected to launch :/"
+unset LNCH
+exec $NAME
+else
+bash $LDIR/$LNCH
+notify "Task completed!"
+unset LNCH
+fi
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
+info "Nothing is installed :/"
+exec $NAME
+fi
+export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to uninstall?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+if [[ -z "$UNST" ]]; then
+info "Nothing was selected for uninstallation :/"
+unset UNST
+exec $NAME
+else
+bash $LDIR/$UNST
+notify "Task completed!"
+unset UNST
+fi
+fi
+
+if [[ $TODO == *"Winetricks"* ]]; then
+cd $NDIR
+PREFIX=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/")
+if [ -z "$PREFIX" ]
+then
+info "No prefix was selected, action was aborted."
+exec $NAME
+else
+echo -e "\e[3;5;0;32m$PREFIX have been selected.\e[30;48;5;82m\e[0m"
+fi
+WINEPREFIX=$PREFIX winetricks
+fi
+
+if [[ $TODO == *"Run a executable in prefix"* ]]; then
+cd $NDIR
+PREFIX=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/")
+if [ -z "$PREFIX" ]
+then
+info "No prefix was selected, action was aborted."
+exec $NAME
+else
+echo -e "\e[3;5;0;32m$PREFIX have been selected.\e[30;48;5;82m\e[0m"
+fi
+EXECUTABLE="$(zenity --file-selection --title="Choose your executable")"
+if [ -z "$EXECUTABLE" ]
+then
+info "No executable was selected, action was aborted."
+exec $NAME
+else
+echo -e "\e[3;5;0;32m$EXECUTABLE have been selected.\e[30;48;5;82m\e[0m"
+fi
+WINEPREFIX=$PREFIX wine "$EXECUTABLE"
+fi
+
+if [[ $TODO == *"Update"* ]]; then
+if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
+info "Nothing is installed :/"
+exec $NAME
+fi
+export UPDE=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to update?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+bash $LDIR/$UPDE
+fi
+
+if [[ $TODO == *"Applying a fix"* ]]; then
+bash $LDIR/fixes
+fi
+
+if [[ $TODO == *"Tinkering"* ]]; then
+Homura Tinkering
+fi
+
+if [[ $TODO == *"Open Homura folder"* ]]; then
+xdg-open $NDIR
+fi
+
+if [[ $TODO == *"Enable logging"* ]]; then
+mkdir -p $NDIR/Logs
+cd $NDIR/Logs
+info "Logging for this session has been enabled, you will later find the log file in the log folder."
+bash $NAME >> "$LNCH-$DATE.log" 2>&1
+notify "The logging have been quit."
+fi
+
+if [[ $TODO == *"Other"* ]]; then
+OTR=$(zenity --list --radiolist --window-icon=$ICO --height=250 --width 250 --title="$NAME $VER - $TODO" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Use software rendering" FALSE "Delete & reset everything" FALSE "Create a shortcut" FALSE "GitLab page" FALSE "Update library")
+
+if [[ $OTR == *"Use software rendering"* ]]; then
+LIBGL_ALWAYS_SOFTWARE=1 $NAME
+notify "You are using now hardware rendering again."
+fi
+
+if [[ $OTR == *"Delete & reset everything"* ]]; then
+DRQ=$(zenity --question --window-icon=$ICO --width 300 --title "$NAME $VER - $OTR" --text "Do you really want to delete and reset everything?"; echo $?)
+if [[ $DRQ == *"0"* ]]; then
+rm -r -d $NDIR
+if [ -f "/usr/home/$USER/.local/share/applications/$NAME.desktop" ]; then
+rm "/usr/home/$USER/.local/share/applications/$NAME.desktop"
+else 
+echo -e "\e[40;38;5;32mNo shortcut was created\e[30;48;5;82m\e[0m"
+fi
+if [ -d "/usr/home/$USER/.local/share/applications/$NAME" ]; then
+rm -r -d "/usr/home/$USER/.local/share/applications/$NAME"
+else 
+echo -e "\e[40;38;5;32mNo shortcut from $NAME was created\e[30;48;5;82m\e[0m"
+fi
+zenity --info --window-icon=$ICO --width=200 --title="$NAME $VER - $OTR" --text="All files of $NAME have been deleted, we hope you had a good time."
+exit
+fi
+fi
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+export CS=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "Of what application do you want to create a shortcut?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+if [[ -z "$CS" ]]; then
+info "Nothing was selected :/"
+exec $NAME
+fi
+bash $LDIR/$CS
+fi
+
+if [[ $OTR == *"GitLab page"* ]]; then
+xdg-open https://gitlab.com/Alexander88207/Homura
+fi
+
+if [[ $OTR == *"Update library"* ]]; then
+rm -r -d $LDIR
+fi
+
+if [[ $TODO == *"About"* ]]; then
+info "Inspired by Lutris.
+$NAME is a launcher that makes it easy to run Windows games/launcher easily on FreeBSD by providing the required fixes and workarounds. 
+The Windows emulation is provided by Wine.
+$NAME is licensed under the BSD 2-Clause License.
+Copyright (c) $COPYRIGHT
+All rights reserved."
+fi
+
+if [[ $TODO == *"Exit"* ]]; then
+notify "Thanks for using $NAME and have a great day!"
+exit
+fi
+fi
+
+if [ -z "$CLI" ]
+then
+exec $NAME
+fi
+
+notify "Task completed!"
