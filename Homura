@@ -258,7 +258,7 @@ PDIR=$NDIR/Tinkering/Programs
 export APPEXISTCHECK=$(cd "$GDIR" && ls && cd "$PDIR" && ls)
 export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to remove from tinkering?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
 if [[ -z "$UNST" ]]; then
-info "Nothing was selected to uninstall"
+notify "Nothing was selected to uninstall"
 unset LNCH
 exec $NAME Tinkering
 else
