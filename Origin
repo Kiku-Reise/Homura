@@ -9,23 +9,23 @@ download https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/Origin
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/Origin winetricks win10
+WINEPREFIX=$GDIR/Origin winetricks win10
 
 # Installer
 installer-message
 warn "Dont forget to disable the Origin in-game overlay or you are unable to start a game."
-WINEPREFIX=$NDIR/Games/$INST wine $DDIR/OriginThinSetup.exe
+WINEPREFIX=$GDIR/$INST wine $DDIR/OriginThinSetup.exe
 rm $DDIR/OriginThinSetup.exe
-chmod -R 777 $NDIR/Games/Origin
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+chmod -R 777 $GDIR/Origin
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Origin/Origin.exe"
+WINEPREFIX=$GDIR/$LNCH wine "$GDIR/$LNCH/drive_c/Program Files/Origin/Origin.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
 rm /usr/home/$USER/Desktop/$UNST.desktop
 fi

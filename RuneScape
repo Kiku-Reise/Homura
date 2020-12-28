@@ -8,20 +8,20 @@ download https://content.runescape.com/downloads/windows/RuneScape-Setup.exe
 
 # Prefix
 prefix-message
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
 warn "If you are on the point where you need to install DirectX 9.0c then cancel this setup or you cannot proceed to install RuneScape."
-WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/RuneScape-Setup.exe"
+WINEPREFIX=$GDIR/$INST wine "$DDIR/RuneScape-Setup.exe"
 rm "$DDIR/RuneScape-Setup.exe"
-WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Jagex/RuneScape Launcher/RuneScape.exe"
+WINEPREFIX=$GDIR/$LNCH wine "$GDIR/$LNCH/drive_c/Program Files/Jagex/RuneScape Launcher/RuneScape.exe"
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 fi
