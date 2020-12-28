@@ -18,7 +18,7 @@ installer-message
 info "The following java installation will not complete but thats OK! :)"
 WINEPREFIX=$GDIR/$INST wine $DDIR/jre-windows.exe
 mv $DDIR/TLauncher-MCL.exe $GDIR/$INST
-rm -r -d "$GDIR/$INST/drive_c/Program Files/Java"
+rm -r -d -f "$GDIR/$INST/drive_c/Program Files/Java"
 cd "$GDIR/$INST/drive_c/Program Files"
 7z x $DDIR/Java.7z
 mv "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_271" "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_51"
@@ -32,5 +32,5 @@ WINEPREFIX=$GDIR/$LNCH wine $GDIR/$LNCH/TLauncher-MCL.exe
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$GDIR/$UNST"
+rm -d -r -f "$GDIR/$UNST"
 fi
