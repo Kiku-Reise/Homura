@@ -247,7 +247,7 @@ fi
 
 if [[ $TODO == *"Remove an application from tinkering"* ]]; then
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
-info "Nothing is installed :/"
+notify "Nothing is installed"
 exec $NAME
 fi
 TODO=Uninstallation
