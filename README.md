@@ -101,7 +101,7 @@ Custom prefixes | :heavy_check_mark:
 Shortcut creation | :heavy_check_mark:
 Delete & reset everything | :heavy_check_mark:
 Enable/Disable DXVK | :heavy_multiplication_x:
-Tinkering | ⌛
+Tinkering | :heavy_check_mark:
 Changing between wine versions | ⌛
 
 # Limitations :x:
