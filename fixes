@@ -1,0 +1,26 @@
+AAF=$(zenity --list --radiolist --window-icon=$ICO  --height=200 --width 350 --title="$NAME $VER" --text "What fix do you want to apply?" --hide-header --column "$NAME" --column "Item" FALSE "Fix of blackscreen in Anno 1404 (Steam)" FALSE "Fix of blackscreen Resident Evil 6 (Steam)")
+
+if [[ $AAF == *"Fix of blackscreen in Anno 1404 (Steam)"* ]]; then
+if [ ! -d "/usr/home/$USER/.local/share/Homura/Games/Steam/drive_c/Program Files/Steam/steamapps/common/Anno 1404" ]; then
+info "Please install the game first."
+else
+cd "/usr/home/$USER/.local/share/Homura/Games/Steam/drive_c/Program Files/Steam/steamapps/common/Anno 1404"
+fetch https://gitlab.com/Alexander88207/Homura/-/raw/master/Gameconfigs/Anno%201404/Engine.ini
+fi
+fi
+
+if [[ $AAF == *"Fix of blackscreen Resident Evil 6 (Steam)"* ]]; then
+if [ ! -d "/usr/home/$USER/.local/share/Homura/Games/Steam/drive_c/Program Files/Steam/steamapps/common/Resident Evil 6" ]; then
+info "Please install the game first."
+else
+cd "/usr/home/$USER/.local/share/Homura/Games/Steam/drive_c/Program Files/Steam/steamapps/common/Resident Evil 6/nativePC/movie"
+rm bh6logo.wmv e5510.wmv e5120.wmv projector.wmv re6logo.mv re6title.wmv
+echo  >bh6logo.wmv
+echo  >e5510.wmv
+echo  >e5120.wmv
+echo  >projector.wmv
+echo  >re6logo.wmv
+echo  >re6title.wmv
+fi
+fi
+

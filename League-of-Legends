@@ -1,0 +1,44 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+info "Sorry but $INST is broken and needs special custom wine patches."
+fi
+# Download
+#download https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.euw.exe
+
+# Prefix
+#prefix-message
+#echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+#WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+#installer-message
+#WINEPREFIX=$NDIR/Games/$INST wine $DDIR/live.euw.exe
+#rm $DDIR/live.euw.exe
+#WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/drive_c/Riot Games/League of Legends/LeagueClient.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm "/usr/home/$USER/.local/share/applications/League of Legends.desktop"
+rm $DDIR/icon.png
+rm /usr/home/$USER/.local/share/applications/$CS.desktop
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+cd $DDIR
+fetch http://2.bp.blogspot.com/-HqSOKIIV59A/U8WP4WFW28I/AAAAAAAAT5U/qTSiV9UgvUY/s1600/icon.png
+if [ -f "/usr/home/$USER/.local/share/applications/$CS.desktop" ]; then
+rm "/usr/home/$USER/.local/share/applications/$CS.desktop"
+fi
+echo "[Desktop Entry]
+Name=$CS
+Exec=$NAME Launch '$CS'
+Type=Application
+StartupNotify=true
+Icon=$DDIR/icon.png" >> "/usr/home/$USER/.local/share/applications/$CS.desktop"
+fi
