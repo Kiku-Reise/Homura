@@ -12,25 +12,25 @@ mv "getLegacy?product=D2XP&locale=enUS&os=WIN" "Diablo II LoD enUS"
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Games/$INST winetricks win10
+WINEPREFIX=$GDIR/$INST winetricks win10
 
 # Installer
 installer-message
 warn "Please select for downloading 'My Computer/C:/ProgramData' and for installing 'My Computer/C:/Program Files' and you should lower the volume a bit because the installer have loud sounds."
-WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/Diablo II enUS"
-WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/Diablo II LoD enUS"
+WINEPREFIX=$GDIR/$INST wine "$DDIR/Diablo II enUS"
+WINEPREFIX=$GDIR/$INST wine "$DDIR/Diablo II LoD enUS"
 rm "$DDIR/Diablo II enUS"
 rm "$DDIR/Diablo II LoD enUS"
-# WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+# WINEPREFIX="$GDIR/$INST" winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-cd "$NDIR/Games/$LNCH/drive_c/Program Files/Diablo II"
-WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Diablo II/Diablo II.exe" -3dfx
+cd "$GDIR/$LNCH/drive_c/Program Files/Diablo II"
+WINEPREFIX=$GDIR/$LNCH wine "$GDIR/$LNCH/drive_c/Program Files/Diablo II/Diablo II.exe" -3dfx
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "$GDIR/$UNST"
 fi
 
 if [[ $OTR == *"Create a shortcut"* ]]; then

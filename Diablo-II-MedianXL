@@ -4,15 +4,15 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 # Download
-if [ ! -d "$NDIR/Games/Diablo-II-With-LoD/drive_c/Program Files/Diablo II" ]; then
+if [ ! -d "$GDIR/Diablo-II-With-LoD/drive_c/Program Files/Diablo II" ]; then
 info "Please install the base game first."
 else
 fetch https://get.median-xl.com/launcher/windows/Median%20XL%20Web%20Setup.exe
 
 # Installation
-WINEPREFIX=$NDIR/Games/Diablo-II-With-LoD wine $DDIR/Median%20XL%20Web%20Setup.exe
+WINEPREFIX=$GDIR/Diablo-II-With-LoD wine $DDIR/Median%20XL%20Web%20Setup.exe
 info "This launcher is able to modify the game but can not start it, please use Diablo-II-With-LoD to start the game"
 rm $DDIR/Median%20XL%20Web%20Setup.exe
-mkdir -p "$NDIR/Games/Diablo-II-With-LoD/drive_c/users/$USER/Application Data/MedianXL/save"
+mkdir -p "$GDIR/Diablo-II-With-LoD/drive_c/users/$USER/Application Data/MedianXL/save"
 fi
 fi

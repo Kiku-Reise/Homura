@@ -4,31 +4,31 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 # Download
-mkdir -p $NDIR/Programs/$INST
-mkdir -p $NDIR/Programs/$INST/Discord
-cd $NDIR/Programs/$INST/Discord
+mkdir -p $PDIR/$INST
+mkdir -p $PDIR/$INST/Discord
+cd $PDIR/$INST/Discord
 download https://homura.magzu.net/dl/Discord.tar
 
 # Prefix
 prefix-message
 echo -e "\e[40;38;5;32mInstallation of dotnet472 and setting prefix to Windows 10\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Programs/$INST winetricks dotnet472 win10
+WINEPREFIX=$PDIR/$INST winetricks dotnet472 win10
 echo -e "\e[40;38;5;32mDisable qwave to prevent a crash during leaving a call or voice that.\e[30;48;5;82m\e[0m"
-WINEPREFIX=$NDIR/Programs/$INST wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v qwave /d disable /f
+WINEPREFIX=$PDIR/$INST wine reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v qwave /d disable /f
 
 # Installer
 installer-message
 tar -xf Discord.tar
 rm Discord.tar
-WINEPREFIX=$NDIR/Programs/$INST winetricks sandbox
+WINEPREFIX=$PDIR/$INST winetricks sandbox
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
-WINEPREFIX=$NDIR/Programs/$LNCH wine $NDIR/Programs/$LNCH/Discord/app-0.0.305/Discord.exe
+WINEPREFIX=$PDIR/$LNCH wine $PDIR/$LNCH/Discord/app-0.0.305/Discord.exe
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
-rm -d -r $NDIR/Programs/$UNST
+rm -d -r $PDIR/$UNST
 rm /usr/home/$USER/.local/share/applications/$UNST.desktop
 fi
 

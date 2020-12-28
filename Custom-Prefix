@@ -4,20 +4,20 @@
 if [[ $TODO == *"Installation"* ]]; then
 
 PREFIXNAME=$(zenity --window-icon=$ICO --title="Create a custom prefix" --text "How your prefix should be called?" --entry --width=260) 
-if [ ! -d "$NDIR/Custom-Prefixes" ]; then
-mkdir "$NDIR/Custom-Prefixes"
+if [ ! -d "CPDIR" ]; then
+mkdir "CPDIR"
 fi
 if [ -z "$PREFIXNAME" ]
 then
 info "No name was given, the creation will be aborted now."
 else
-mkdir -p "$NDIR/Custom-Prefixes/$PREFIXNAME"
-cd "$NDIR/Custom-Prefixes/$PREFIXNAME"
+mkdir -p "CPDIR/$PREFIXNAME"
+cd "CPDIR/$PREFIXNAME"
 info "Now you need to select the executable that do you want to use in this prefix."
 EXECUTABLE="$(zenity --file-selection --title="Choose your executable")"
 ENV=$(zenity --title="Environment variable" --text "Do you need an environment variable for your executable? (for example DXVK_HUD=1) if not leave it blank." --entry --window-icon=$ICO --width=260) 
 SPM=$(zenity --title="Startparameter" --text "Do you need an startparameter for your executable? (for example -console) if not leave it blank." --entry --window-icon=$ICO --width=260) 
-echo "$ENV WINEPREFIX='$NDIR/Custom-Prefixes/$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
+echo "$ENV WINEPREFIX='CPDIR/$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
 fi
 fi
 
@@ -26,7 +26,7 @@ if [ ! "$(ls -A "/usr/home/$USER/.local/share/$NAME/Custom-Prefixes")" ]
 then
 info "There is no custom prefix installed"
 else
-cd "$NDIR/Custom-Prefixes"
+cd "CPDIR"
 PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
 if [ -z "$PREFIXNAME" ]
 then
@@ -43,7 +43,7 @@ then
 info "There is no custom prefix installed"
 exec $NAME
 else
-cd "$NDIR/Custom-Prefixes"
+cd "CPDIR"
 PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
 if [ -z "$PREFIXNAME" ]
 then
@@ -83,7 +83,7 @@ fi
 fi
 
 if [[ $TODO == *"Update"* ]]; then
-cd "$NDIR/Custom-Prefixes"
+cd "CPDIR"
 PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
 if [ -z "$PREFIXNAME" ]
 then
