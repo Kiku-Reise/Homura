@@ -1,0 +1,99 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+PREFIXNAME=$(zenity --window-icon=$ICO --title="Create a custom prefix" --text "How your prefix should be called?" --entry --width=260) 
+if [ ! -d "$NDIR/Custom-Prefixes" ]; then
+mkdir "$NDIR/Custom-Prefixes"
+fi
+if [ -z "$PREFIXNAME" ]
+then
+info "No name was given, the creation will be aborted now."
+else
+mkdir -p "$NDIR/Custom-Prefixes/$PREFIXNAME"
+cd "$NDIR/Custom-Prefixes/$PREFIXNAME"
+info "Now you need to select the executable that do you want to use in this prefix."
+EXECUTABLE="$(zenity --file-selection --title="Choose your executable")"
+ENV=$(zenity --title="Environment variable" --text "Do you need an environment variable for your executable? (for example DXVK_HUD=1) if not leave it blank." --entry --window-icon=$ICO --width=260) 
+SPM=$(zenity --title="Startparameter" --text "Do you need an startparameter for your executable? (for example -console) if not leave it blank." --entry --window-icon=$ICO --width=260) 
+echo "$ENV WINEPREFIX='$NDIR/Custom-Prefixes/$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
+fi
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+if [ ! "$(ls -A "/usr/home/$USER/.local/share/$NAME/Custom-Prefixes")" ]
+then
+info "There is no custom prefix installed"
+else
+cd "$NDIR/Custom-Prefixes"
+PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
+if [ -z "$PREFIXNAME" ]
+then
+info "There was no custom prefix selected."
+else
+sh "$PREFIXNAME/start.sh"
+fi
+fi
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+if [ ! "$(ls -A "/usr/home/$USER/.local/share/$NAME/Custom-Prefixes")" ]
+then
+info "There is no custom prefix installed"
+exec $NAME
+else
+cd "$NDIR/Custom-Prefixes"
+PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
+if [ -z "$PREFIXNAME" ]
+then
+info "There was no custom prefix selected :("
+unset $UNST
+exec $NAME
+else
+rm -r -d "$PREFIXNAME"
+fi
+fi
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+if [ ! "$(ls -A "/usr/home/$USER/.local/share/$NAME/Custom-Prefixes")" ]
+then
+zenity --info --width=310 --window-icon=$ICO --title="$NAME $VER - $LNCH" --text="There is no custom prefix installed"
+else
+cd "$NDIR/Custom Prefixes"
+PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
+if [ -z "$PREFIXNAME" ]
+then
+zenity --info --width=310 --window-icon=$ICO --title="$NAME $VER - $TODO" --text="There was no custom prefix selected."
+else
+SCNAME=$(zenity --window-icon=$ICO --title="Create a custom prefix shortcut" --text "How your shortcut should be called?" --entry --width=260) 
+SCICO="$(zenity --file-selection --title="Choose an icon")"
+if [ -f "/usr/home/$USER/.local/share/applications/$SCNAME.desktop" ]; then
+rm /usr/home/$USER/.local/share/applications/$SCNAME.desktop
+fi
+echo "[Desktop Entry]
+Name="$SCNAME"
+Exec=bash '$PREFIXNAME/start.sh'
+Type=Application
+StartupNotify=true
+Icon=$SCICO" >> "/usr/home/$USER/.local/share/applications/$SCNAME.desktop"
+fi
+fi
+fi
+
+if [[ $TODO == *"Update"* ]]; then
+cd "$NDIR/Custom-Prefixes"
+PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/Custom-Prefixes/")
+if [ -z "$PREFIXNAME" ]
+then
+zenity --info --width=310 --window-icon=$ICO --title="$NAME $VER - $TODO" --text="There was no custom prefix selected."
+else
+EXECUTABLE="$(zenity --file-selection --title="Choose your executable")"
+ENV=$(zenity --title="Environment variable" --text "Do you need an environment variable for your executable? (for example DXVK_HUD=1) if not leave it blank." --entry --window-icon=$ICO --width=260)
+SPM=$(zenity --title="Startparameter" --text "Do you need an startparameter for your executable? (for example -console) if not leave it blank." --entry --window-icon=$ICO --width=260) 
+cd "$PREFIXNAME"
+rm start.sh
+echo "$ENV WINEPREFIX='$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
+fi
+fi

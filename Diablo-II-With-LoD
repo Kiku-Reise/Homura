@@ -1,0 +1,46 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download "https://eu.battle.net/download/getLegacy?product=D2DV&locale=enUS&os=WIN"
+download "https://eu.battle.net/download/getLegacy?product=D2XP&locale=enUS&os=WIN"
+mv "getLegacy?product=D2DV&locale=enUS&os=WIN" "Diablo II enUS"
+mv "getLegacy?product=D2XP&locale=enUS&os=WIN" "Diablo II LoD enUS"
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+warn "Please select for downloading 'My Computer/C:/ProgramData' and for installing 'My Computer/C:/Program Files' and you should lower the volume a bit because the installer have loud sounds."
+WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/Diablo II enUS"
+WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/Diablo II LoD enUS"
+rm "$DDIR/Diablo II enUS"
+rm "$DDIR/Diablo II LoD enUS"
+# WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+cd "$NDIR/Games/$LNCH/drive_c/Program Files/Diablo II"
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Diablo II/Diablo II.exe" -3dfx
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+if [ -f "/usr/home/$USER/.local/share/applications/$CS.desktop" ]; then
+rm /usr/home/$USER/.local/share/applications/$CS.desktop
+fi
+echo "[Desktop Entry]
+Name=$CS
+Exec=$NAME Launch $CS
+Type=Application
+StartupNotify=true
+Icon=CFF8_Diablo II.0" >> /usr/home/$USER/.local/share/applications/$CS.desktop
+fi
