@@ -1,0 +1,30 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+mkdir "$NDIR/Games/$INST"
+cd "$NDIR/Games/$INST"
+download https://homura.magzu.net/games/VC-German.7z
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+7z x VC-German.7z
+rm VC-German.7z
+info "This game was developed by G5 Entertainment for the PC and later removed from the market. (Probably to make money on the cell phone with the pay2win version - who knows). This is probably the last copy of the german version of my old HDD when I was a kid. This is not an intentional breaking of copyrights, a good old game like this should simply not disappear."
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+cd "$NDIR/Games/$LNCH/Virtual City"
+WINEPREFIX="$NDIR/Games/$LNCH" wine "$NDIR/Games/$LNCH/Virtual City/VirtualCity.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+fi

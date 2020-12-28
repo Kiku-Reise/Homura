@@ -1,0 +1,30 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download http://tropixgame.com/Tropix2Installer.exe
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+WINEPREFIX=$NDIR/Games/$INST wine "$DDIR/Tropix2Installer.exe"
+rm $DDIR/Tropix2Installer.exe
+WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Tropix2/tpx2.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm /usr/home/$USER/.local/share/applications/$UNST.desktop
+fi
+
+
