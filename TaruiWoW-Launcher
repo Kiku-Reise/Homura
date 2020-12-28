@@ -1,0 +1,28 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download https://launcherdata.tauri.hu/launcher/tlauncherinstaller.exe
+
+# Prefix
+prefix-message
+echo -e "\e[40;38;5;32mSet prefix to Windows 10\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10
+
+# Installer
+installer-message
+WINEPREFIX=$NDIR/Games/$INST wine $DDIR/tlauncherinstaller.exe
+rm $DDIR/tlauncherinstaller.exe
+WINEPREFIX="$NDIR/Games/$INST" winetricks sandbox
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Tauri Launcher/Launcher.exe"
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+rm -d -r "/home/Alexander/.local/share/applications/wine/Programs/Tauri Launcher.desktop"
+fi

@@ -1,0 +1,71 @@
+# Created by: Alexander Vereeken <Alexander88207@protonmail.com>
+# Maintainer: Alexander Vereeken <Alexander88207@protonmail.com>
+
+if [[ $TODO == *"Installation"* ]]; then
+
+# Download
+download https://homura.magzu.net/games/steam.7z
+
+# Prefix
+prefix-message
+# ie8 needs to be installed manually if needed, wine fails to create the window most times in some WMs.
+#echo -e "\e[40;38;5;32mInstalling ie8 to fix browser issues in GOD OF FLAME and maybe in other games too\e[30;48;5;82m\e[0m"
+#WINEPREFIX=$NDIR/Games/$INST winetricks ie8
+echo -e "\e[40;38;5;32mInstalling dotnet35, dotnet40 & corefonts fonts to fix crashes, missing library errors and missing fonts in several games\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks dotnet35 dotnet40 corefonts vcrun2015
+echo -e "\e[40;38;5;32mInstalling xna40 for stardew valley and other xna games, install d3dx9_43.dll from outside for Lego Worlds & directmusic for Rise of Nations\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks xna40 d3dx9_43 directmusic
+echo -e "\e[40;38;5;32mSet prefix to Windows 10, prevent that the wm decorates the window and disable crashdialog.\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST winetricks win10 windowmanagerdecorated=n nocrashdialog
+echo -e "\e[40;38;5;32mApplying audio fixes for several games\e[30;48;5;82m\e[0m"
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\LifeIsStrange.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\helldivers.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\VanHelsing_x86.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\Ember.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\Terraria.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\Stardew Valley.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\LEGO_Worlds.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\BioShockInfinite.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\BH6.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\WormsReloaded.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\Shipping-ThiefGame.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\ROTT.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+WINEPREFIX=$NDIR/Games/$INST wine reg.exe ADD "HKEY_CURRENT_USER\Software\Wine\AppDefaults\Rage.exe" /v "Version" /t "REG_SZ" /d "winxp" /f
+
+# Installer
+installer-message
+cd "$NDIR/Games/$INST/drive_c/Program Files" && 7z x $DDIR/steam.7z
+WINEPREFIX=$NDIR/Games/$INST winetricks sandbox
+#echo -e "\e[40;38;5;32mReplacing the shortcut with one that contains the required tweaks\e[30;48;5;82m\e[0m"
+#rm /usr/home/$USER/.local/share/applications/wine/Programs/Steam/Steam.desktop
+#echo "[Desktop Entry]
+#Name=Steam
+#Exec=env WINEPREFIX="$NDIR/Games/$INST" wine '$NDIR/Games/$INST/drive_c/Program Files/Steam/Steam.exe' -no-browser +open steam://open/#minigameslist
+#Type=Application
+#StartupNotify=true
+#Icon=BAC4_steam.0" >> /usr/home/$USER/.local/share/applications/wine/Programs/Steam/Steam.desktop
+rm $DDIR/steam.7z
+fi
+
+if [[ $TODO == *"Launcher"* ]]; then
+WINEPREFIX=$NDIR/Games/$LNCH wine "$NDIR/Games/$LNCH/drive_c/Program Files/Steam/Steam.exe" -no-browser +open steam://open/minigameslist
+fi
+
+if [[ $TODO == *"Uninstallation"* ]]; then
+rm -d -r "$NDIR/Games/$UNST"
+#rm -d -r /usr/home/$USER/.local/share/applications/wine/Programs/$UNST
+#rm /usr/home/$USER/Desktop/$UNST.desktop
+fi
+
+if [[ $OTR == *"Create a shortcut"* ]]; then
+mkdir -p /usr/home/$USER/.local/share/applications/wine/Programs/$CS
+if [ -f "/usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop" ]; then
+rm /usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop
+fi
+echo "[Desktop Entry]
+Name=$CS
+Exec=$NAME Launch $CS
+Type=Application
+StartupNotify=true
+Icon=BAC4_steam.0" >> /usr/home/$USER/.local/share/applications/wine/Programs/$CS/$CS.desktop
+fi
