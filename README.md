@@ -1,16 +1,16 @@
 <p align="center">
-  <img src="https://gitlab.com/Alexander88207/Homura/-/raw/master/Media/Banner.jpeg">
+  <img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Banner.jpeg">
 </p>
 
 <p align="center">
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Status">Status</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Status">Status</a>&nbsp;&nbsp;&nbsp;
 	<a href="https://gitlab.com/Alexander88207/Homura/-/tree/library">Library</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Tweaks">Tweaks</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Borked">Borked</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Working-Games">Working Games</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Handbook">Handbook</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Hints">Hints</a>&nbsp;&nbsp;&nbsp;
-	<a href="https://gitlab.com/Alexander88207/Homura/-/wikis/Contributing">Contributing</a>
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Tweaks">Tweaks</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Borked">Borked</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Working-Games">Working Games</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Handbook">Handbook</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Hints">Hints</a>&nbsp;&nbsp;&nbsp;
+	<a href="https://codeberg.org/Alexander88207/Homura/wiki/Contributing">Contributing</a>
 </p>
 
 # Introduction :microphone:
@@ -68,7 +68,7 @@ Please only do this, if you know what are you doing.
 
 ```
 cd /usr/local/bin
-fetch https://gitlab.com/Alexander88207/Homura/-/raw/master/Homura
+fetch https://codeberg.org/Alexander88207/Homura/raw/branch/main/Homura
 chmod +x Homura
 ```
 
@@ -120,21 +120,21 @@ You need fast help, want to help or just want to talk?  ／人◕ ‿‿ ◕人�
 
 # Credits :star:
 
-- [Alexander88207](https://gitlab.com/Alexander88207) - Lead programmer & Maintainer
+- [Alexander88207](https://codeberg.org/Alexander88207) - Lead programmer & Maintainer
 - [Epychan](https://steamcommunity.com/profiles/76561198055067377) - Testing games and reporting fixes
 - [Brandon Ayers](https://github.com/thedaemon) - Testing games
 - [MagZu](https://github.com/magzu) - Hosting the mirror (homura.magzu.net)
-- [You?](https://gitlab.com/Alexander88207/Homura/-/wikis/Contributing)
+- [You?](https://codeberg.org/Alexander88207/Homura/wiki/Contributing)
 
 # Screenshots
 
-![](https://gitlab.com/Alexander88207/Homura/-/raw/master/Media/Screenshot.png "Screenshot")
+![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot.png "Screenshot")
 
-![](https://gitlab.com/Alexander88207/Homura/-/raw/master/Media/Screenshot4.png "Screenshot")
+![](https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot4.png "Screenshot")
 
-<img src="https://gitlab.com/Alexander88207/Homura/-/raw/master/Media/Screenshot2.png" alt="Monitor" height="500" width="700"> 
+<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot2.png" alt="Monitor" height="500" width="700"> 
 
-<img src="https://gitlab.com/Alexander88207/Homura/-/raw/master/Media/Screenshot3.png" alt="Monitor" height="500" width="700"> 
+<img src="https://codeberg.org/Alexander88207/Homura/raw/branch/main/media/Screenshot3.png" alt="Monitor" height="500" width="700"> 
 
 # Videos
 
