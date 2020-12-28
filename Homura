@@ -307,7 +307,7 @@ fi
 # Initial menu
 if [ -z "$CLI" ]
 then
-export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Installation" FALSE "Launcher" FALSE "Uninstallation" FALSE "Winetricks" FALSE "Tinkering" FALSE "Run a executable in prefix" FALSE "Update" FALSE "Applying a fix" FALSE "Open Homura folder" FALSE "Enable logging" FALSE "Other" FALSE "About" FALSE "Exit")
+export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Installation" FALSE "Launcher" FALSE "Uninstallation" FALSE "Winetricks" FALSE "Tinkering" FALSE "Run a executable in prefix" FALSE "Update" FALSE "Applying a fix" FALSE "Tinkering" FALSE "Open Homura folder" FALSE "Enable logging" FALSE "Other" FALSE "About" FALSE "Exit")
 
 if [[ $TODO == *"Installation"* ]]; then
 # Checking the internet connection.
@@ -415,9 +415,6 @@ fi
 WINEPREFIX=$PREFIX winetricks
 fi
 
-if [[ $TODO == *"Tinkering"* ]]; then
-exec $NAME Tinkering
-
 if [[ $TODO == *"Run a executable in prefix"* ]]; then
 cd $NDIR
 PREFIX=$(zenity --file-selection --directory --title="Choose your prefix" --filename="/usr/home/$USER/.local/share/$NAME/")
@@ -453,7 +450,7 @@ bash $LDIR/fixes
 fi
 
 if [[ $TODO == *"Tinkering"* ]]; then
-Homura Tinkering
+$NAME Tinkering
 fi
 
 if [[ $TODO == *"Open Homura folder"* ]]; then
