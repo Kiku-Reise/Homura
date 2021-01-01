@@ -7,6 +7,7 @@ if [[ $TODO == *"Installation"* ]]; then
 download https://homura.magzu.net/games/TLauncher-MCL.exe
 download https://homura.magzu.net/games/jre-windows.exe
 download https://homura.magzu.net/games/Java.7z
+download https://ntcore.com/files/4gb_patch.zip
 
 # Prefix
 prefix-message
@@ -17,17 +18,18 @@ WINEPREFIX=$GDIR/$INST winetricks win10
 installer-message
 info "The following java installation will not complete but thats OK! :)"
 WINEPREFIX=$GDIR/$INST wine $DDIR/jre-windows.exe
+unzip 4gb_patch.zip
+WINEPREFIX=$GDIR/$INST wine $DDIR/4gb_patch.exe "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_51/bin/javaw.exe"
 mv $DDIR/TLauncher-MCL.exe $GDIR/$INST
 rm -r -d -f "$GDIR/$INST/drive_c/Program Files/Java"
 cd "$GDIR/$INST/drive_c/Program Files"
 7z x $DDIR/Java.7z
 mv "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_271" "$GDIR/$INST/drive_c/Program Files/Java/jre1.8.0_51"
-info "Please know this client freezes fast and is unstable, you maybe need to run it more than one times to get a stable state. Also please set the ram allocation to 1000MB"
-warn "Now the most important thing, for the client to reach its stable state, you have to be patient and let the world load. That is, when you spawn, do not move, when you are sure that everything has loaded before you, you can slowly look around, if everything is loaded, you can move and play.
-
-Note: During this procedure the client will crash several times, it is annoying at first but worth it."
+info "Please know this client is unstable, you maybe need to run it more than one times to get a stable state."
 rm $DDIR/jre-windows.exe
 rm $DDIR/Java.7z
+rm $DDIR/4gb_patch.zip
+rm $DDIR/4gb_patch.exe
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
