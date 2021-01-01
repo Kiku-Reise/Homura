@@ -13,8 +13,10 @@ prefix-message
 #WINEPREFIX=$GDIR/$INST winetricks ie8
 echo -e "\e[40;38;5;32mInstalling dotnet35, dotnet40 & corefonts fonts to fix crashes, missing library errors and missing fonts in several games\e[30;48;5;82m\e[0m"
 WINEPREFIX=$GDIR/$INST winetricks dotnet35 dotnet40 corefonts vcrun2015
-echo -e "\e[40;38;5;32mInstalling xna40 for stardew valley and other xna games, install d3dx9_43.dll from outside for Lego Worlds & directmusic for Rise of Nations\e[30;48;5;82m\e[0m"
-WINEPREFIX=$GDIR/$INST winetricks xna40 d3dx9_43 directmusic
+echo -e "\e[40;38;5;32mInstalling xna40 for stardew valley and other xna games, install d3dx9_43.dll from outside for Lego Worlds\e[30;48;5;82m\e[0m"
+WINEPREFIX=$GDIR/$INST winetricks xna40 d3dx9_43
+#directmusic is needed for Rise of Nations but breaks also games like Lego Worlds.
+#WINEPREFIX=$GDIR/$INST winetricks directmusic
 echo -e "\e[40;38;5;32mSet prefix to Windows 10, prevent that the wm decorates the window and disable crashdialog.\e[30;48;5;82m\e[0m"
 WINEPREFIX=$GDIR/$INST winetricks win10 windowmanagerdecorated=n nocrashdialog
 echo -e "\e[40;38;5;32mApplying audio fixes for several games\e[30;48;5;82m\e[0m"
