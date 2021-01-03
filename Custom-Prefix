@@ -17,7 +17,7 @@ info "Now you need to select the executable that do you want to use in this pref
 EXECUTABLE="$(zenity --file-selection --title="Choose your executable")"
 ENV=$(zenity --title="Environment variable" --text "Do you need an environment variable for your executable? (for example DXVK_HUD=1) if not leave it blank." --entry --window-icon=$ICO --width=260) 
 SPM=$(zenity --title="Startparameter" --text "Do you need an startparameter for your executable? (for example -console) if not leave it blank." --entry --window-icon=$ICO --width=260) 
-echo "$ENV WINEPREFIX='CPDIR/$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
+echo "$ENV WINEPREFIX='$CPDIR/$PREFIXNAME' wine '$EXECUTABLE' $SPM" >> start.sh
 fi
 fi
 
