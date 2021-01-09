@@ -316,6 +316,7 @@ fi
 if [ -z "$CLI" ]
 then
 export TODO=$(zenity --list --radiolist --window-icon=$ICO  --height=450 --width 300 --title="$NAME $VER" --text "What do you want to do?" --hide-header --column "$NAME" --column "Item" FALSE "Installation" FALSE "Launcher" FALSE "Uninstallation" FALSE "Winetricks" FALSE "Tinkering" FALSE "Run a executable in prefix" FALSE "Update" FALSE "Applying a fix" FALSE "Tinkering" FALSE "Open Homura folder" FALSE "Enable logging" FALSE "Other" FALSE "About" FALSE "Exit")
+fi
 
 if [[ $TODO == *"Installation"* ]]; then
 # Checking the internet connection.
@@ -333,7 +334,9 @@ notify "Action was canceled."
 exec $NAME
 fi
 fi
+if [ -z "$CLI" ]
 export INST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to install?" --height=$ALH --width=$WTH --column="Application" $APPLIST)
+fi
 # Check if an application was selected.
 if [[ -z "$INST" ]]; then
 notify "Nothing was selected for installation"
@@ -541,7 +544,6 @@ fi
 if [[ $TODO == *"Exit"* ]]; then
 notify "Thanks for using $NAME and have a great day!"
 exit
-fi
 fi
 
 if [ -z "$CLI" ]
