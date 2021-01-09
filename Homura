@@ -331,7 +331,9 @@ notify "Action was canceled."
 exec $NAME
 fi
 fi
+
 if [ -z "$CLI" ]
+then
 export INST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to install?" --height=$ALH --width=$WTH --column="Application" $APPLIST)
 fi
 # Check if an application was selected.
@@ -385,11 +387,21 @@ fi
 fi
 
 if [[ $TODO == *"Launcher"* ]]; then
+
+# Check if something was installed
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
 notify "Nothing is installed"
 exec $NAME
 fi
+
+# Application menu
+if [ -z "$CLI" ]
+then
 export LNCH=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to launch?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+fi
+
+
+# Check if an application was selected
 if [[ -z "$LNCH" ]]; then
 notify "Nothing was selected to launch"
 unset LNCH
@@ -402,11 +414,20 @@ fi
 fi
 
 if [[ $TODO == *"Uninstallation"* ]]; then
+
+# Check if something was installed
 if [ -z "$(ls -A $GDIR && ls -A $PDIR && ls -A $CPDIR )" ]; then
 notify "Nothing is installed"
 exec $NAME
 fi
+
+# Application menu
+if [ -z "$CLI" ]
+then
 export UNST=$(zenity --list --title="$NAME $VER - $TODO" --window-icon=$ICO --text "What do you want to uninstall?" --height=$ALH --width=$WTH --column="Application" $APPEXISTCHECK)
+fi
+
+# Check if an application was selected
 if [[ -z "$UNST" ]]; then
 notify "Nothing was selected for uninstallation"
 unset UNST
