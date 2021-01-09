@@ -1,6 +1,6 @@
 #!/usr/local/bin/bash
-export NAME=Homura
-export VER=5.3
+export NAME=Homura-devel
+export VER=5.4
 export ALH=500
 export WTH=500
 GPU=$(glxinfo | grep "OpenGL vendor string")
