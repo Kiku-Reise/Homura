@@ -41,7 +41,6 @@ if [[ $TODO == *"Uninstallation"* ]]; then
 if [ ! "$(ls -A "$CPDIR")" ]
 then
 info "There is no custom prefix installed"
-exec $NAME
 else
 cd "CPDIR"
 PREFIXNAME=$(zenity --file-selection --directory --title="Choose your prefix" --filename="$CPDIR/")
