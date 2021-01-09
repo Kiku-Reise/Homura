@@ -160,15 +160,12 @@ Install() {
 CLI=1
 export INST=$1
 export TODO=Installation
-cd $DDIR
-bash $LDIR/$1
 }
 
 Launch() {
 CLI=1
 export LNCH=$1
 export TODO=Launcher
-bash $LDIR/$1
 }
 
 Uninstall() {
